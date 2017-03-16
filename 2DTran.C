@@ -43,20 +43,23 @@ point centerTree, centerHouse;
 
 void main() {
   int i, j, pixelColor;
-  double x, y, angle;
+  double x, y, angle, scaleX, scaleY, shear, traslate;
   int selectedImage;
   int selectedTransform;
-  int rotateTree;
-  int rotateHouse;
+  int rotateTree, traslateTree, scaleTree, shearTree;
+  int rotateHouse, traslateHouse, scaleHouse, shearHouse;
   int charTxt;
+  double factor;
   BITMAP bitmap;
+
+
   SVGA(0x100, 640, 400);
   selectedImage = 1;
   selectedTransform = 0;
-  rotateHouse = 0;
-  rotateTree = 0;
+  rotateHouse = 0; rotateTree = 0; traslateHouse = 0; traslateTree = 0;
+  scaleTree = 0; scaleHouse = 0; shearTree = 0; shearHouse = 0;
+  scaleX = 1.0; scaleY = 1.0; factor = 0.1;
   openFileBMP(0, 0, "trans/pfondo.bmp", &bitmap);
-  //rotation(2,2,2,1, 45);
 
   initFig();
   
@@ -77,12 +80,20 @@ void main() {
             angle = -30;
             rotateTree = 1;
           }
+          if (selectedTransform == SCALE) {
+            scaleX += factor;
+            scaleTree = 1;
+          }
         }
         else {
           if (selectedTransform == ROTATION) {
             angle = -30;
             rotateHouse = 1;
           } 
+          if (selectedTransform == SCALE) {
+            scaleX += factor;
+            scaleHouse = 1;
+          }
         }
           break;
         case LEFT:
@@ -91,19 +102,49 @@ void main() {
               angle = 30;
               rotateTree = 1;
           }
+          if (selectedTransform == SCALE) {
+            scaleX -= factor;
+            scaleTree = 1;
+          }
         }
         else {
           if (selectedTransform == ROTATION) {
               angle = 30;
               rotateHouse = 1;
           } 
+          if (selectedTransform == SCALE) {
+            scaleX -= factor;
+            scaleHouse = 1;
+          }
         }
           break;
         case UP:
-          printf("%s\n", "up" );
+          if (selectedImage == 1) {
+            if (selectedTransform == SCALE) {
+              scaleY += factor;
+              scaleTree = 1;
+            }
+          }
+          else {
+            if (selectedTransform == SCALE) {
+              scaleY += factor;
+              scaleHouse = 1;
+            }
+          }
           break;
         case DOWN:
-          printf("%s\n", "down" );
+          if (selectedImage == 1) {
+            if (selectedTransform == SCALE) {
+              scaleY -= factor;
+              scaleTree = 1;
+            }
+          }
+          else {
+            if (selectedTransform == SCALE) {
+              scaleY -= factor;
+              scaleHouse = 1;
+            }
+          }
           break;
         case TRANSLATION:
           printf("%s\n", "translation" );
@@ -112,21 +153,7 @@ void main() {
           selectedTransform = ROTATION;
           break;
         case SCALE:
-          printf("%s\n", "scale" );
-          v1House = scale(v1House, 1.1, 1);
-          v2House = scale(v2House, 1.1, 1);
-          v3House = scale(v3House, 1.1, 1);
-          v4House = scale(v4House, 1.1, 1);
-          v5House = scale(v5House, 1.1, 1);
-          v6House = scale(v6House, 1.1, 1);
-          v7House = scale(v7House, 1.1, 1);
-          v8House = scale(v8House, 1.1, 1);
-          v9House = scale(v9House, 1.1, 1);
-          v10House = scale(v10House, 1.1, 1);
-          v11House = scale(v11House, 1.1, 1);
-          v12House = scale(v12House, 1.1, 1);
-          v13House = scale(v13House, 1.1, 1);
-
+          selectedTransform = SCALE;
           break;
         case REFLECTION:
           printf("%s\n", "reflection" );
@@ -171,6 +198,44 @@ void main() {
         );
         rotateHouse = 0;
       } 
+      if (scaleTree == 1) {
+        printf("%f\n", scaleX);
+        printf("%f\n", scaleY );
+        eraseTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
+        v1Tree = scale(v1Tree, scaleX, scaleY);
+        v2Tree = scale(v2Tree, scaleX, scaleY);
+        v3Tree = scale(v3Tree, scaleX, scaleY);
+        v4Tree = scale(v4Tree, scaleX, scaleY);
+        v5Tree = scale(v5Tree, scaleX, scaleY);
+        v6Tree = scale(v6Tree, scaleX, scaleY);
+        v7Tree = scale(v7Tree, scaleX, scaleY);
+        drawTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
+        scaleTree = 0;
+      }
+      if (scaleHouse == 1) {
+        eraseHouse(v1House, v2House, v3House, v4House, v5House,
+          v6House, v7House, v8House, v9House, v10House, v11House,
+          v12House, v13House
+        );
+        v1House = scale(v1House, scaleX, scaleY);
+        v2House = scale(v2House, scaleX, scaleY);
+        v3House = scale(v3House, scaleX, scaleY);
+        v4House = scale(v4House, scaleX, scaleY);
+        v5House = scale(v5House, scaleX, scaleY);
+        v6House = scale(v6House, scaleX, scaleY);
+        v7House = scale(v7House, scaleX, scaleY);
+        v8House = scale(v8House, scaleX, scaleY);
+        v9House = scale(v9House, scaleX, scaleY);
+        v10House = scale(v10House, scaleX, scaleY);
+        v11House = scale(v11House, scaleX, scaleY);
+        v12House = scale(v12House, scaleX, scaleY);
+        v13House = scale(v13House, scaleX, scaleY);
+        drawHouse(v1House, v2House, v3House, v4House, v5House,
+          v6House, v7House, v8House, v9House, v10House, v11House,
+          v12House, v13House
+        );
+        scaleHouse = 0;
+      }
     }//closes khbit
   }//closes while
 }//closes main
