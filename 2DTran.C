@@ -16,8 +16,7 @@
 #define TRANSLATION 116
 #define ROTATION 114
 #define SCALE 115
-#define REFLECTION 101
-#define SHEAR 121
+#define SHEAR 101
 #define UP 72
 #define DOWN 80
 #define LEFT 75
@@ -171,7 +170,7 @@ void main() {
               traslateTree = 1;
             }
             if (selectedTransform == SHEAR) {
-              shearYTree = -factorShear;
+              shearYTree = factorShear;
               shearTree = 1;
             }
           }
@@ -186,7 +185,7 @@ void main() {
               traslateHouse = 1;
             }
             if (selectedTransform == SHEAR) {
-              shearYHouse = -factorShear;
+              shearYHouse = factorShear;
               shearHouse = 1;
             }
           }
@@ -202,13 +201,13 @@ void main() {
               traslateTree = 1;
             }
             if (selectedTransform == SHEAR) {
-              shearYTree = factorShear;
+              shearYTree = -factorShear;
               shearTree = 1;
             }
           }
           else {
             if (selectedTransform == SCALE) {
-              scaleYHouse = factorDecrease;
+              scaleYHouse = -factorDecrease;
               scaleHouse = 1;
             }
             if (selectedTransform == TRANSLATION) {
@@ -216,7 +215,7 @@ void main() {
               traslateHouse = 1;
             }
             if (selectedTransform == SHEAR) {
-              shearYHouse = factorShear;
+              shearYHouse = -factorShear;
               shearHouse = 1;
             }
           }
@@ -230,11 +229,7 @@ void main() {
         case SCALE:
           selectedTransform = SCALE;
           break;
-        case REFLECTION:
-          printf("%s\n", "reflection" );
-          break;
         case SHEAR:
-            printf("%s\n", "shear" );
             selectedTransform = SHEAR;
           break;
       }//closes switch
@@ -355,15 +350,44 @@ void main() {
       }
       if (shearTree == 1) {
         eraseTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
-        v1Tree = shea(shearXTree, shearYTree, v1Tree);
-        v2Tree = shea(shearXTree, shearYTree, v2Tree);
-        v3Tree = shea(shearXTree, shearYTree, v3Tree);
-        v4Tree = shea(shearXTree, shearYTree, v4Tree);
-        v5Tree = shea(shearXTree, shearYTree, v5Tree);
-        v6Tree = shea(shearXTree, shearYTree, v6Tree);
-        v7Tree = shea(shearXTree, shearYTree, v7Tree);
+        v1Tree = shea(shearXTree, shearYTree, v1Tree, centerTree);
+        v2Tree = shea(shearXTree, shearYTree, v2Tree, centerTree);
+        v3Tree = shea(shearXTree, shearYTree, v3Tree, centerTree);
+        v4Tree = shea(shearXTree, shearYTree, v4Tree, centerTree);
+        v5Tree = shea(shearXTree, shearYTree, v5Tree, centerTree);
+        v6Tree = shea(shearXTree, shearYTree, v6Tree, centerTree);
+        v7Tree = shea(shearXTree, shearYTree, v7Tree, centerTree);
         drawTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
         shearTree = 0;
+        shearXTree = 0;
+        shearYTree = 0;
+      }
+
+      if (shearHouse == 1) {
+           eraseHouse(v1House, v2House, v3House, v4House, v5House,
+          v6House, v7House, v8House, v9House, v10House, v11House,
+          v12House, v13House
+        );
+        v1House = shea(shearXHouse, shearYHouse, v1House, centerHouse);
+        v2House = shea(shearXHouse, shearYHouse, v2House, centerHouse);
+        v3House = shea(shearXHouse, shearYHouse, v3House, centerHouse);
+        v4House = shea(shearXHouse, shearYHouse, v4House, centerHouse);
+        v5House = shea(shearXHouse, shearYHouse, v5House, centerHouse);
+        v6House = shea(shearXHouse, shearYHouse, v6House, centerHouse);
+        v7House = shea(shearXHouse, shearYHouse, v7House, centerHouse);
+        v8House = shea(shearXHouse, shearYHouse, v8House, centerHouse);
+        v9House = shea(shearXHouse, shearYHouse, v9House, centerHouse);
+        v10House = shea(shearXHouse, shearYHouse, v10House, centerHouse);
+        v11House = shea(shearXHouse, shearYHouse, v11House, centerHouse);
+        v12House = shea(shearXHouse, shearYHouse, v12House, centerHouse);
+        v13House = shea(shearXHouse, shearYHouse, v13House, centerHouse);
+        
+        drawHouse(v1House, v2House, v3House, v4House, v5House,
+          v6House, v7House, v8House, v9House, v10House, v11House,
+          v12House, v13House
+        );
+        shearXHouse = 0;
+        shearYHouse = 0;
       }
 
     }//closes khbit

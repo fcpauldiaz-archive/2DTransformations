@@ -76,10 +76,14 @@ point scale(point ref, point rotateRef, double scale_x, double scale_y) {
   return multiply(ref.x, ref.y, matrix);
 }
 
-point shea(double shear_x, double shear_y, point ref) {
+point shea(double shear_x, double shear_y, point ref, point pivot) {
   double matrix[3][3];
-  matrix[0][0] = 1; matrix[0][1] = shear_x; matrix[0][2] = 0;
-  matrix[1][0] = shear_y; matrix[1][1] = 1; matrix[1][2] = 0;
+  matrix[0][0] = 1; 
+  matrix[0][1] = shear_x; 
+  matrix[0][2] = -pivot.x*shear_x;
+  matrix[1][0] = shear_y; 
+  matrix[1][1] = 1; 
+  matrix[1][2] = -pivot.y*shear_y;
   matrix[2][0] = 0; matrix[2][1] = 0; matrix[2][2] = 1;
   return multiply(ref.x, ref.y, matrix);
 }

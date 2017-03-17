@@ -524,7 +524,7 @@ void scanLine(int cant_edges, int color, int width) {
     for (i=0; i < cant_edges; i++) {
       if (((vertex[i][1] <= y) && (vertex[i+1][1] > y)) || 
           ((vertex[i][1] > y) && (vertex[i+1][1]<=y))) {
-        lineDraw[k]= (vertex[i][0]+slope[i]*(y-vertex[i][1]));
+        lineDraw[k]= (int)(vertex[i][0]+slope[i]*(y-vertex[i][1]));
         k++;
       }
     }
