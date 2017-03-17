@@ -40,10 +40,10 @@ point multiply(double x, double y, double firstMatrix[3][3])
 
 }
 
-point translation(point ref, point trans) {
+point traslation(double x, double y, point ref) {
   double matrix[3][3];
-  matrix[0][0] = 1; matrix[0][1] = 0; matrix[0][2] = trans.x;
-  matrix[1][0] = 0; matrix[1][1] = 1; matrix[1][2] = trans.y;
+  matrix[0][0] = 1; matrix[0][1] = 0; matrix[0][2] = x;
+  matrix[1][0] = 0; matrix[1][1] = 1; matrix[1][2] = y;
   matrix[2][0] = 0; matrix[2][1] = 0; matrix[2][2] = 1;
   return multiply(ref.x, ref.y, matrix);
 }
@@ -62,11 +62,17 @@ point rotation(point rotatePoint, point rotateRef, int angle) {
   return multiply(rotatePoint.x, rotatePoint.y, matrix);
 }
 
-point scale(point ref, double scale_x, double scale_y) {
+point scale(point ref, point rotateRef, double scale_x, double scale_y) {
   double matrix[3][3];
-  matrix[0][0] = scale_x; matrix[0][1] = 0; matrix[0][2] = 0;
-  matrix[1][0] = 0; matrix[1][1] = scale_y; matrix[1][2] = 0;
-  matrix[2][0] = 0; matrix[2][1] = 0; matrix[2][2] = 1;
+  matrix[0][0] = scale_x;
+  matrix[0][1] = 0; 
+  matrix[0][2] = -rotateRef.x*scale_x + rotateRef.x;
+  matrix[1][0] = 0; 
+  matrix[1][1] = scale_y; 
+  matrix[1][2] = -rotateRef.y*scale_y + rotateRef.y; 
+  matrix[2][0] = 0;
+  matrix[2][1] = 0; 
+  matrix[2][2] = 1;
   return multiply(ref.x, ref.y, matrix);
 }
 
