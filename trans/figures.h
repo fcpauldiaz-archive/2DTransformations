@@ -137,9 +137,6 @@ void drawTree(point v1, point v2, point v3, point v4, point v5, point v6, point 
      vertex[3][1] = v7.y;
      scanLine(4, 120, 1);
      //draw triangle
-     drawLine(v1.x, v1.y, v2.x, v2.y, 60, 1);
-     drawLine(v2.x, v2.y, v3.x, v3.y, 60, 1);
-     drawLine(v3.x, v3.y, v1.x, v1.y, 60, 1);
      vertex[0][0] = v1.x;
      vertex[0][1] = v1.y;
      vertex[1][0] = v2.x;
@@ -147,6 +144,9 @@ void drawTree(point v1, point v2, point v3, point v4, point v5, point v6, point 
      vertex[2][0] = v3.x;
      vertex[2][1] = v3.y;
      scanLine(3, 60, 1);
+     drawLine(v1.x, v1.y, v2.x, v2.y, 60, 3);
+     drawLine(v2.x, v2.y, v3.x, v3.y, 60, 3);
+     drawLine(v3.x, v3.y, v1.x, v1.y, 60, 3);
 }
 
 
@@ -165,10 +165,6 @@ void eraseTree(point v1, point v2, point v3, point v4, point v5, point v6, point
      vertex[3][0] = v7.x;
      vertex[3][1] = v7.y;
      scanLine(4, 255, 1);
-     //draw triangle
-     drawLine(v1.x, v1.y, v2.x, v2.y, 255, 1);
-     drawLine(v2.x, v2.y, v3.x, v3.y, 255, 1);
-     drawLine(v3.x, v3.y, v1.x, v1.y, 255, 1);
      vertex[0][0] = v1.x;
      vertex[0][1] = v1.y;
      vertex[1][0] = v2.x;
@@ -176,6 +172,10 @@ void eraseTree(point v1, point v2, point v3, point v4, point v5, point v6, point
      vertex[2][0] = v3.x;
      vertex[2][1] = v3.y;
      scanLine(3, 255, 1); 
+     //draw triangle
+     drawLine(v1.x, v1.y, v2.x, v2.y, 255, 3);
+     drawLine(v2.x, v2.y, v3.x, v3.y, 255, 3);
+     drawLine(v3.x, v3.y, v1.x, v1.y, 255, 3);
 }
 
 
