@@ -45,12 +45,13 @@ void main() {
   int i, j, pixelColor;
   double x, y, angle, scaleXTree, scaleYTree, scaleXHouse, scaleYHouse, shear;
   double traslateXTree, traslateYTree, traslateXHouse, traslateYHouse;
+  double shearXTree, shearYTree, shearXHouse, shearYHouse;
   int selectedImage;
   int selectedTransform, traslate;
   int rotateTree, traslateTree, scaleTree, shearTree;
   int rotateHouse, traslateHouse, scaleHouse, shearHouse;
   int charTxt;
-  double factorIncrease, factorDecrease;
+  double factorIncrease, factorDecrease, factorTraslate, factorShear;
   BITMAP bitmap;
 
 
@@ -61,6 +62,7 @@ void main() {
   scaleTree = 0; scaleHouse = 0; shearTree = 0; shearHouse = 0;
   scaleXTree = 1.0; scaleYTree = 1.0; factorIncrease = 1.1; factorDecrease = 0.95;
   scaleXHouse = 1.0; scaleYHouse = 1.0; traslate = 0;
+  factorTraslate = 20.0; factorShear = 0.1;
   openFileBMP(0, 0, "trans/pfondo.bmp", &bitmap);
 
   initFig();
@@ -88,18 +90,33 @@ void main() {
           }
           //MOVE TREE
           if (selectedTransform == TRANSLATION) {
-            traslateXTree = 10.0;
+            traslateXTree = factorTraslate;
             traslateTree = 1;
           }
+          if (selectedTransform == SHEAR) {
+            shearXTree = factorShear;
+            shearTree = 1;
+          } 
         }
         else {
+          //rotate house
           if (selectedTransform == ROTATION) {
             angle = -30;
             rotateHouse = 1;
           } 
+          //scale house
           if (selectedTransform == SCALE) {
             scaleXHouse = factorIncrease;
             scaleHouse = 1;
+          }
+          //move house to the right
+          if (selectedTransform == TRANSLATION) {
+            traslateXHouse = factorTraslate;
+            traslateHouse = 1;
+          }
+          if (selectedTransform == SHEAR) {
+            shearXHouse = factorShear;
+            shearHouse = 1;
           }
         }
           break;
@@ -114,8 +131,12 @@ void main() {
             scaleTree = 1;
           }
           if (selectedTransform == TRANSLATION) {
-            traslateXTree = -10.0;
+            traslateXTree = -factorTraslate;
             traslateTree = 1;
+          }
+          if (selectedTransform == SHEAR) {
+            shearXTree = -factorShear;
+            shearTree = 1;
           }
         }
         else {
@@ -127,6 +148,15 @@ void main() {
             scaleXHouse = factorDecrease;
             scaleHouse = 1;
           }
+          //traslate house to the left
+          if (selectedTransform == TRANSLATION) {
+            traslateXHouse = -factorTraslate;
+            traslateHouse = 1;
+          }
+          if (selectedTransform == SHEAR) {
+            shearXHouse = -factorShear;
+            shearHouse = 1;
+          }
         }
           break;
         case UP:
@@ -135,11 +165,29 @@ void main() {
               scaleYTree = factorIncrease;
               scaleTree = 1;
             }
+            //move tree up
+            if (selectedTransform == TRANSLATION) {
+              traslateYTree = -factorTraslate;
+              traslateTree = 1;
+            }
+            if (selectedTransform == SHEAR) {
+              shearYTree = -factorShear;
+              shearTree = 1;
+            }
           }
           else {
             if (selectedTransform == SCALE) {
               scaleYHouse = factorIncrease;
               scaleHouse = 1;
+            }
+            //move house up
+            if (selectedTransform == TRANSLATION) {
+              traslateYHouse = -factorTraslate;
+              traslateHouse = 1;
+            }
+            if (selectedTransform == SHEAR) {
+              shearYHouse = -factorShear;
+              shearHouse = 1;
             }
           }
           break;
@@ -149,16 +197,31 @@ void main() {
               scaleYTree = factorDecrease;
               scaleTree = 1;
             }
+            if (selectedTransform == TRANSLATION) {
+              traslateYTree = factorTraslate;
+              traslateTree = 1;
+            }
+            if (selectedTransform == SHEAR) {
+              shearYTree = factorShear;
+              shearTree = 1;
+            }
           }
           else {
             if (selectedTransform == SCALE) {
               scaleYHouse = factorDecrease;
               scaleHouse = 1;
             }
+            if (selectedTransform == TRANSLATION) {
+              traslateYHouse = factorTraslate;
+              traslateHouse = 1;
+            }
+            if (selectedTransform == SHEAR) {
+              shearYHouse = factorShear;
+              shearHouse = 1;
+            }
           }
           break;
         case TRANSLATION:
-          printf("%s\n", "traslation" );
           selectedTransform = TRANSLATION;
           break;
         case ROTATION:
@@ -172,6 +235,7 @@ void main() {
           break;
         case SHEAR:
             printf("%s\n", "shear" );
+            selectedTransform = SHEAR;
           break;
       }//closes switch
       if (rotateTree == 1) {
@@ -247,7 +311,6 @@ void main() {
         scaleHouse = 0;
       }
       if (traslateTree == 1) {
-        printf("%s\n", "trans tree");
         eraseTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
         v1Tree = traslation(traslateXTree, traslateYTree, v1Tree);
         v2Tree = traslation(traslateXTree, traslateYTree, v2Tree);
@@ -258,11 +321,51 @@ void main() {
         v7Tree = traslation(traslateXTree, traslateYTree, v7Tree);
         centerTree = traslation(traslateXTree, traslateYTree, centerTree);
         drawTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
+        traslateXTree = 0;
+        traslateYTree = 0;
         traslateTree = 0;
       }
       if (traslateHouse == 1) {
+        eraseHouse(v1House, v2House, v3House, v4House, v5House,
+          v6House, v7House, v8House, v9House, v10House, v11House,
+          v12House, v13House
+        );
+        v1House = traslation(traslateXHouse, traslateYHouse, v1House);
+        v2House = traslation(traslateXHouse, traslateYHouse, v2House);
+        v3House = traslation(traslateXHouse, traslateYHouse, v3House);
+        v4House = traslation(traslateXHouse, traslateYHouse, v4House);
+        v5House = traslation(traslateXHouse, traslateYHouse, v5House);
+        v6House = traslation(traslateXHouse, traslateYHouse, v6House);
+        v7House = traslation(traslateXHouse, traslateYHouse, v7House);
+        v8House = traslation(traslateXHouse, traslateYHouse, v8House);
+        v9House = traslation(traslateXHouse, traslateYHouse, v9House);
+        v10House = traslation(traslateXHouse, traslateYHouse, v10House);
+        v11House = traslation(traslateXHouse, traslateYHouse, v11House);
+        v12House = traslation(traslateXHouse, traslateYHouse, v12House);
+        v13House = traslation(traslateXHouse, traslateYHouse, v13House);
+        centerHouse = traslation(traslateXHouse, traslateYHouse, centerHouse);
+        drawHouse(v1House, v2House, v3House, v4House, v5House,
+          v6House, v7House, v8House, v9House, v10House, v11House,
+          v12House, v13House
+        );
+        scaleHouse = 0;
+        traslateXHouse = 0;
+        traslateYHouse = 0;
 
       }
+      if (shearTree == 1) {
+        eraseTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
+        v1Tree = shea(shearXTree, shearYTree, v1Tree);
+        v2Tree = shea(shearXTree, shearYTree, v2Tree);
+        v3Tree = shea(shearXTree, shearYTree, v3Tree);
+        v4Tree = shea(shearXTree, shearYTree, v4Tree);
+        v5Tree = shea(shearXTree, shearYTree, v5Tree);
+        v6Tree = shea(shearXTree, shearYTree, v6Tree);
+        v7Tree = shea(shearXTree, shearYTree, v7Tree);
+        drawTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
+        shearTree = 0;
+      }
+
     }//closes khbit
   }//closes while
 }//closes main
