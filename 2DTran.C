@@ -78,88 +78,93 @@ void main() {
           selectedImage = 2;
           break;
         case RIGHT:
-        if (selectedImage == 1) {
-          if (selectedTransform == ROTATION) {
-            angle = -30;
-            rotateTree = 1;
+          if (selectedImage == 1) {
+            //rotate tree
+            if (selectedTransform == ROTATION) {
+              angle = -30;
+              rotateTree = 1;
+            }
+            //scale tree
+            if (selectedTransform == SCALE) {
+              scaleXTree = factorIncrease;
+              scaleTree = 1;
+            }
+            //traslate tree
+            if (selectedTransform == TRANSLATION) {
+              traslateXTree = factorTraslate;
+              traslateTree = 1;
+            }
+            //shear tree
+            if (selectedTransform == SHEAR) {
+              shearXTree = factorShear;
+              shearTree = 1;
+            } 
           }
-          if (selectedTransform == SCALE) {
-            scaleXTree = factorIncrease;
-            scaleTree = 1;
+          else {
+            //rotate house
+            if (selectedTransform == ROTATION) {
+              angle = -30;
+              rotateHouse = 1;
+            } 
+            //scale house
+            if (selectedTransform == SCALE) {
+              scaleXHouse = factorIncrease;
+              scaleHouse = 1;
+            }
+            //move house to the right
+            if (selectedTransform == TRANSLATION) {
+              traslateXHouse = factorTraslate;
+              traslateHouse = 1;
+            }
+            //shear house
+            if (selectedTransform == SHEAR) {
+              shearXHouse = factorShear;
+              shearHouse = 1;
+            }
           }
-          //MOVE TREE
-          if (selectedTransform == TRANSLATION) {
-            traslateXTree = factorTraslate;
-            traslateTree = 1;
-          }
-          if (selectedTransform == SHEAR) {
-            shearXTree = factorShear;
-            shearTree = 1;
-          } 
-        }
-        else {
-          //rotate house
-          if (selectedTransform == ROTATION) {
-            angle = -30;
-            rotateHouse = 1;
-          } 
-          //scale house
-          if (selectedTransform == SCALE) {
-            scaleXHouse = factorIncrease;
-            scaleHouse = 1;
-          }
-          //move house to the right
-          if (selectedTransform == TRANSLATION) {
-            traslateXHouse = factorTraslate;
-            traslateHouse = 1;
-          }
-          if (selectedTransform == SHEAR) {
-            shearXHouse = factorShear;
-            shearHouse = 1;
-          }
-        }
           break;
         case LEFT:
-        if (selectedImage == 1) {
-          if (selectedTransform == ROTATION) {
-              angle = 30;
-              rotateTree = 1;
+          if (selectedImage == 1) {
+            if (selectedTransform == ROTATION) {
+                angle = 30;
+                rotateTree = 1;
+            }
+            if (selectedTransform == SCALE) {
+              scaleXTree = factorDecrease;
+              scaleTree = 1;
+            }
+            if (selectedTransform == TRANSLATION) {
+              traslateXTree = -factorTraslate;
+              traslateTree = 1;
+            }
+            if (selectedTransform == SHEAR) {
+              shearXTree = -factorShear;
+              shearTree = 1;
+            }
           }
-          if (selectedTransform == SCALE) {
-            scaleXTree = factorDecrease;
-            scaleTree = 1;
+          else {
+            if (selectedTransform == ROTATION) {
+                angle = 30;
+                rotateHouse = 1;
+            } 
+            if (selectedTransform == SCALE) {
+              scaleXHouse = factorDecrease;
+              scaleHouse = 1;
+            }
+            //traslate house to the left
+            if (selectedTransform == TRANSLATION) {
+              traslateXHouse = -factorTraslate;
+              traslateHouse = 1;
+            }
+            if (selectedTransform == SHEAR) {
+              shearXHouse = -factorShear;
+              shearHouse = 1;
+            }
           }
-          if (selectedTransform == TRANSLATION) {
-            traslateXTree = -factorTraslate;
-            traslateTree = 1;
-          }
-          if (selectedTransform == SHEAR) {
-            shearXTree = -factorShear;
-            shearTree = 1;
-          }
-        }
-        else {
-          if (selectedTransform == ROTATION) {
-              angle = 30;
-              rotateHouse = 1;
-          } 
-          if (selectedTransform == SCALE) {
-            scaleXHouse = factorDecrease;
-            scaleHouse = 1;
-          }
-          //traslate house to the left
-          if (selectedTransform == TRANSLATION) {
-            traslateXHouse = -factorTraslate;
-            traslateHouse = 1;
-          }
-          if (selectedTransform == SHEAR) {
-            shearXHouse = -factorShear;
-            shearHouse = 1;
-          }
-        }
           break;
         case UP:
           if (selectedImage == 1) {
+            //scale tree
             if (selectedTransform == SCALE) {
               scaleYTree = factorIncrease;
               scaleTree = 1;
@@ -169,6 +174,7 @@ void main() {
               traslateYTree = -factorTraslate;
               traslateTree = 1;
             }
+            //shear tree
             if (selectedTransform == SHEAR) {
               shearYTree = factorShear;
               shearTree = 1;
@@ -192,28 +198,34 @@ void main() {
           break;
         case DOWN:
           if (selectedImage == 1) {
+            //scale tree
             if (selectedTransform == SCALE) {
               scaleYTree = factorDecrease;
               scaleTree = 1;
             }
+            //traslate tree
             if (selectedTransform == TRANSLATION) {
               traslateYTree = factorTraslate;
               traslateTree = 1;
             }
+            //shear tree
             if (selectedTransform == SHEAR) {
               shearYTree = -factorShear;
               shearTree = 1;
             }
           }
           else {
+            //scale house
             if (selectedTransform == SCALE) {
               scaleYHouse = -factorDecrease;
               scaleHouse = 1;
             }
+            //traslate house
             if (selectedTransform == TRANSLATION) {
               traslateYHouse = factorTraslate;
               traslateHouse = 1;
             }
+            //shear house
             if (selectedTransform == SHEAR) {
               shearYHouse = -factorShear;
               shearHouse = 1;
@@ -230,7 +242,7 @@ void main() {
           selectedTransform = SCALE;
           break;
         case SHEAR:
-            selectedTransform = SHEAR;
+          selectedTransform = SHEAR;
           break;
       }//closes switch
       if (rotateTree == 1) {
@@ -364,7 +376,7 @@ void main() {
       }
 
       if (shearHouse == 1) {
-           eraseHouse(v1House, v2House, v3House, v4House, v5House,
+        eraseHouse(v1House, v2House, v3House, v4House, v5House,
           v6House, v7House, v8House, v9House, v10House, v11House,
           v12House, v13House
         );
