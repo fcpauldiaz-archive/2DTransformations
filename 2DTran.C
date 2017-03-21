@@ -21,6 +21,7 @@
 #define DOWN 80
 #define LEFT 75
 #define RIGHT 77
+#define HELP 104
 double vertex[10][2];
 typedef struct pt {
   double x;
@@ -46,7 +47,7 @@ void main() {
   double traslateXTree, traslateYTree, traslateXHouse, traslateYHouse;
   double shearXTree, shearYTree, shearXHouse, shearYHouse;
   int selectedImage;
-  int selectedTransform, traslate;
+  int selectedTransform, traslate, activeHelp;
   int rotateTree, traslateTree, scaleTree, shearTree;
   int rotateHouse, traslateHouse, scaleHouse, shearHouse;
   int charTxt;
@@ -56,7 +57,7 @@ void main() {
 
   SVGA(0x100, 640, 400);
   selectedImage = 1;
-  selectedTransform = 0;
+  selectedTransform = 0; activeHelp = 0;
   rotateHouse = 0; rotateTree = 0; traslateHouse = 0; traslateTree = 0;
   scaleTree = 0; scaleHouse = 0; shearTree = 0; shearHouse = 0;
   scaleXTree = 1.0; scaleYTree = 1.0; factorIncrease = 1.1; factorDecrease = 0.95;
@@ -217,7 +218,7 @@ void main() {
           else {
             //scale house
             if (selectedTransform == SCALE) {
-              scaleYHouse = -factorDecrease;
+              scaleYHouse = factorDecrease;
               scaleHouse = 1;
             }
             //traslate house
@@ -244,6 +245,21 @@ void main() {
         case SHEAR:
           selectedTransform = SHEAR;
           break;
+        case HELP:
+          if (activeHelp == 0) {
+            openFileBMP(0, -30, "trans/help.bmp", &bitmap);
+            activeHelp = 1;
+          } else {
+            openFileBMP(0, 0, "trans/pfondo.bmp", &bitmap);
+            drawTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
+            drawHouse(v1House, v2House, v3House, v4House, v5House,
+              v6House, v7House, v8House, v9House, v10House, v11House,
+              v12House, v13House
+            );
+            activeHelp = 0;
+          }
+          break;
+
       }//closes switch
       if (rotateTree == 1) {
         eraseTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
@@ -291,6 +307,8 @@ void main() {
         v6Tree = scale(v6Tree, centerTree, scaleXTree, scaleYTree);
         v7Tree = scale(v7Tree, centerTree, scaleXTree, scaleYTree);
         drawTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
+        scaleXTree = 1.0;
+        scaleYTree = 1.0;
         scaleTree = 0;
       }
       if (scaleHouse == 1) {
@@ -315,6 +333,8 @@ void main() {
           v6House, v7House, v8House, v9House, v10House, v11House,
           v12House, v13House
         );
+        scaleXHouse = 1.0;
+        scaleYHouse = 1.0;
         scaleHouse = 0;
       }
       if (traslateTree == 1) {
