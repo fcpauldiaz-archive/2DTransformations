@@ -50,19 +50,19 @@ void main() {
   int selectedTransform, traslate, activeHelp;
   int rotateTree, traslateTree, scaleTree, shearTree;
   int rotateHouse, traslateHouse, scaleHouse, shearHouse;
-  int charTxt;
+  int charTxt, backgroundTree, backgroundHouse;
   double factorIncrease, factorDecrease, factorTraslate, factorShear;
   BITMAP bitmap;
 
 
   SVGA(0x100, 640, 400);
-  selectedImage = 1;
+  selectedImage = 1; backgroundTree = 0; backgroundTree = 0;
   selectedTransform = 0; activeHelp = 0;
   rotateHouse = 0; rotateTree = 0; traslateHouse = 0; traslateTree = 0;
   scaleTree = 0; scaleHouse = 0; shearTree = 0; shearHouse = 0;
   scaleXTree = 1.0; scaleYTree = 1.0; factorIncrease = 1.1; factorDecrease = 0.95;
   scaleXHouse = 1.0; scaleYHouse = 1.0; traslate = 0;
-  factorTraslate = 20.0; factorShear = 0.1;
+  factorTraslate = 30.0; factorShear = 0.1;
   openFileBMP(0, 0, "trans/pfondo.bmp", &bitmap);
 
   initFig();
@@ -82,7 +82,7 @@ void main() {
           if (selectedImage == 1) {
             //rotate tree
             if (selectedTransform == ROTATION) {
-              angle = -30;
+              angle = 30;
               rotateTree = 1;
             }
             //scale tree
@@ -99,12 +99,13 @@ void main() {
             if (selectedTransform == SHEAR) {
               shearXTree = factorShear;
               shearTree = 1;
-            } 
+            }
+            backgroundHouse = 1; 
           }
           else {
             //rotate house
             if (selectedTransform == ROTATION) {
-              angle = -30;
+              angle = 30;
               rotateHouse = 1;
             } 
             //scale house
@@ -122,12 +123,13 @@ void main() {
               shearXHouse = factorShear;
               shearHouse = 1;
             }
+            backgroundTree = 1;
           }
           break;
         case LEFT:
           if (selectedImage == 1) {
             if (selectedTransform == ROTATION) {
-                angle = 30;
+                angle = -30;
                 rotateTree = 1;
             }
             if (selectedTransform == SCALE) {
@@ -142,10 +144,11 @@ void main() {
               shearXTree = -factorShear;
               shearTree = 1;
             }
+            backgroundHouse = 1;
           }
           else {
             if (selectedTransform == ROTATION) {
-                angle = 30;
+                angle = -30;
                 rotateHouse = 1;
             } 
             if (selectedTransform == SCALE) {
@@ -161,6 +164,7 @@ void main() {
               shearXHouse = -factorShear;
               shearHouse = 1;
             }
+            backgroundTree = 1;
           }
           break;
         case UP:
@@ -180,6 +184,7 @@ void main() {
               shearYTree = factorShear;
               shearTree = 1;
             }
+            backgroundHouse = 1;
           }
           else {
             if (selectedTransform == SCALE) {
@@ -195,6 +200,7 @@ void main() {
               shearYHouse = factorShear;
               shearHouse = 1;
             }
+            backgroundTree = 1;
           }
           break;
         case DOWN:
@@ -214,6 +220,7 @@ void main() {
               shearYTree = -factorShear;
               shearTree = 1;
             }
+            backgroundHouse = 1;
           }
           else {
             //scale house
@@ -231,6 +238,7 @@ void main() {
               shearYHouse = -factorShear;
               shearHouse = 1;
             }
+            backgroundTree = 1;
           }
           break;
         case TRANSLATION:
@@ -246,6 +254,8 @@ void main() {
           selectedTransform = SHEAR;
           break;
         case HELP:
+          backgroundTree = 0;
+          backgroundHouse = 0;
           if (activeHelp == 0) {
             openFileBMP(0, -30, "trans/help.bmp", &bitmap);
             activeHelp = 1;
@@ -337,6 +347,39 @@ void main() {
         scaleYHouse = 1.0;
         scaleHouse = 0;
       }
+      if (backgroundTree == 1 && selectedImage == 1) {
+        eraseTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
+        drawTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
+        backgroundTree = 0;
+      }
+      if (backgroundHouse == 1 && selectedImage == 1) {
+        eraseHouse(v1House, v2House, v3House, v4House, v5House,
+          v6House, v7House, v8House, v9House, v10House, v11House,
+          v12House, v13House
+        );
+        drawHouse(v1House, v2House, v3House, v4House, v5House,
+          v6House, v7House, v8House, v9House, v10House, v11House,
+          v12House, v13House
+        );
+        backgroundHouse = 0;
+      }
+      if (backgroundHouse == 1 && selectedImage == 2) {
+        eraseHouse(v1House, v2House, v3House, v4House, v5House,
+          v6House, v7House, v8House, v9House, v10House, v11House,
+          v12House, v13House
+        );
+        drawHouse(v1House, v2House, v3House, v4House, v5House,
+          v6House, v7House, v8House, v9House, v10House, v11House,
+          v12House, v13House
+        );
+        backgroundHouse = 0;
+      }
+      if (backgroundTree == 1 && selectedImage == 2) {
+        eraseTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
+        drawTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
+        backgroundTree = 0;
+      }
+    
       if (traslateTree == 1) {
         eraseTree(v1Tree, v2Tree, v3Tree, v4Tree, v5Tree, v6Tree, v7Tree);
         v1Tree = traslation(traslateXTree, traslateYTree, v1Tree);
